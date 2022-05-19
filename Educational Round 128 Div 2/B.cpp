@@ -1,12 +1,14 @@
 #include <bits/stdc++.h>
+#include<algorithm>
+#include<vector>
 using namespace std;
-char FIELD[100][5];
+vector<string> FIELD(999);
 
-int searchByCOl(int Rx, int n, int m)
+int searchByCOl(int Rcol, int n)
 {
-    for(int j = Rx-1; j >= 0; j--){
-        for(int i = 0; i < m; i++){
-            if(FIELD[i][j] == 'R') return 1;
+    for(int col = Rcol-1; col >= 0; col--){
+        for(int row = 0; row < n; row++){
+            if(FIELD[row][col] == 'R') return 1;
         }
     }
     return 0;
@@ -15,24 +17,24 @@ void solve()
 {
     int n, m;
     int topRow = 0, leftCol = 0, firstR = 0;
-    int Rx;
+    int Rcol;
     int flag = 1;
     cin>>n>>m;
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            cin>>FIELD[i][j];
-            if(FIELD[0][j] == 'R' && !topRow) topRow = 1;
-            if(FIELD[i][0] == 'R' && !leftCol) leftCol = 1;
-            if(FIELD[i][j] == 'R' && !firstR){
+    for(int row = 0; row < n; row++){
+        cin>>FIELD[row];
+        for(int col = 0; col < m; col++){
+            if(FIELD[0][col] == 'R' && !topRow) topRow = 1;
+            if(FIELD[row][0] == 'R' && !leftCol) leftCol = 1;
+            if(FIELD[row][col] == 'R' && !firstR){
                 firstR = 1;
-                Rx = j;
+                Rcol = col;
             }
         }
     }
     if (FIELD[0][0] == 'R') cout<<"YES"<<endl;
     else if(topRow && leftCol) cout<<"NO"<<endl;
     else{
-        flag = searchByCOl(Rx, n, m);
+        flag = searchByCOl(Rcol, n);
         if(!flag) cout<<"YES"<<endl;
         else cout<<"NO"<<endl;
     }
